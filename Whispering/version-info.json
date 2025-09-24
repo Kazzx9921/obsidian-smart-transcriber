@@ -1,0 +1,15 @@
+{
+  "name": "Smart Transcriber",
+  "version": "1.0.0",
+  "description": "Record audio and get instant transcripts using OpenAI Whisper API with intelligent voice detection and real-time sidebar display.",
+  "author": "Kazen",
+  "minAppVersion": "1.0.0",
+  "buildTime": "2025-09-24T10:50:47.564Z",
+  "files": [
+    "README.md",
+    "main.js",
+    "manifest.json",
+    "version-info.json",
+    "versions.json"
+  ]
+}
