@@ -26,21 +26,21 @@ export default class OBWhisperingPlugin extends Plugin {
 			console.log('View registered');
 
 		// Add ribbon icon to activate view
-		this.addRibbonIcon('captions', 'Open Smart Transcribe', () => {
-			console.log('Ribbon icon clicked');
-			this.activateView();
-		});
+		this.addRibbonIcon('captions', 'Open Smart Transcriber', () => {
+				console.log('Ribbon icon clicked');
+				this.activateView();
+			});
 			console.log('Ribbon icon added');
 
 		// Add command to open view
 		this.addCommand({
-			id: 'open-smart-transcribe',
-			name: 'Open Smart Transcribe',
-			callback: () => {
-				console.log('Command executed');
-				this.activateView();
-			}
-		});
+			id: 'open-smart-transcriber',
+			name: 'Open Smart Transcriber',
+				callback: () => {
+					console.log('Command executed');
+					this.activateView();
+				}
+			});
 			console.log('Command added');
 
 			// Add settings tab

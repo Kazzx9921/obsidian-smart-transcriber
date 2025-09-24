@@ -17,8 +17,8 @@ export class VoiceTranscriberSettingTab extends PluginSettingTab {
 
 		// Support section
 		new Setting(containerEl)
-			.setName('Support Smart Transcribe')
-			.setDesc('Grateful for Smart Transcribe? Your support helps us continue building and improving it!')
+			.setName('Support Smart Transcriber')
+			.setDesc('Grateful for Smart Transcriber? Your support helps us continue building and improving it!')
 			.addButton(button => button
 				.setButtonText('Buy Me a Coffee')
 				.setCta()
@@ -124,9 +124,9 @@ export class VoiceTranscriberSettingTab extends PluginSettingTab {
 		// 停頓檢測閾值
 		new Setting(containerEl)
 			.setName('Pause Detection Threshold')
-			.setDesc('How long to wait for voice pause before uploading segment (500ms - 3000ms)')
+			.setDesc('How long to wait for voice pause before uploading segment (10ms - 2000ms)')
 			.addSlider(slider => slider
-				.setLimits(500, 3000, 100)
+				.setLimits(10, 2000, 10)
 				.setValue(this.plugin.settings.pauseThreshold)
 				.setDynamicTooltip()
 				.onChange(async (value) => {
@@ -146,30 +146,6 @@ export class VoiceTranscriberSettingTab extends PluginSettingTab {
 					}
 				}));
 
-		// 最小分段時長
-		new Setting(containerEl)
-			.setName('Minimum Segment Duration')
-			.setDesc('Minimum duration of speech before creating a segment (1s - 10s)')
-			.addSlider(slider => slider
-				.setLimits(1, 10, 1)
-				.setValue(this.plugin.settings.minSegmentDuration)
-				.setDynamicTooltip()
-				.onChange(async (value) => {
-					this.plugin.settings.minSegmentDuration = value;
-					await this.plugin.saveSettings();
-				}))
-			.addText(text => text
-				.setValue(`${this.plugin.settings.minSegmentDuration}s`)
-				.setDisabled(true)
-				.then(textComponent => {
-					// Update the text display when slider changes
-					const slider = containerEl.querySelector('.setting-item:last-child input[type="range"]') as HTMLInputElement;
-					if (slider) {
-						slider.addEventListener('input', () => {
-							textComponent.setValue(`${slider.value}s`);
-						});
-					}
-				}));
 
 
 		// 語言設定區塊

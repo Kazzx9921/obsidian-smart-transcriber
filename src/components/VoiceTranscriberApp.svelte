@@ -151,7 +151,7 @@
 <div class="voice-transcriber-app">
   <!-- Header -->
   <div class="vt-header">
-    <h3>Smart Transcribe</h3>
+    <h3>Smart Transcriber</h3>
     {#if isRecording}
       <div class="header-timer">
         {formatTime(recordingTime)}

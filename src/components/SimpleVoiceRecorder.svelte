@@ -40,8 +40,9 @@
   let detectionResult: VoiceDetectionResult | null = null;
 
   // Smart timing state
-  let activeRecordingTime = 0;        // Only counts when voice is active
+  let activeRecordingTime = 0;        // Only counts when voice is active (累積顯示)
   let totalRecordingTime = 0;         // Internal total time
+  let segmentRecordingTime = 0;       // Time since last segment (用於分段計算)
   let isSegmentReady = false;         // Whether segment is ready for upload
   let lastVoiceEndTime = 0;           // Timestamp when voice stopped
   let wasVoiceActive = false;         // Previous voice state for change detection
@@ -160,16 +161,18 @@
                            detectionResult.confidence > 0.3 && 
                            detectionResult.audioLevel > MIN_AUDIO_LEVEL;
       
-      // 詳細調試信息
-      console.log(`Detection Result:`, {
-        isHumanVoice: detectionResult.isHumanVoice,
-        isComputerAudio: detectionResult.isComputerAudio,
-        confidence: (detectionResult.confidence * 100).toFixed(1) + '%',
-        audioLevel: detectionResult.audioLevel.toFixed(1),
-        audioLevelPass: detectionResult.audioLevel > MIN_AUDIO_LEVEL,
-        voiceDetected: voiceDetected,
-        currentIsVoiceActive: isVoiceActive
-      });
+      // 詳細調試信息 (降低頻率以減少CPU負擔)
+      if (Math.random() < 0.1) { // 只有10%的機率輸出日誌
+        console.log(`Detection Result:`, {
+          isHumanVoice: detectionResult.isHumanVoice,
+          isComputerAudio: detectionResult.isComputerAudio,
+          confidence: (detectionResult.confidence * 100).toFixed(1) + '%',
+          audioLevel: detectionResult.audioLevel.toFixed(1),
+          audioLevelPass: detectionResult.audioLevel > MIN_AUDIO_LEVEL,
+          voiceDetected: voiceDetected,
+          currentIsVoiceActive: isVoiceActive
+        });
+      }
 
       // Handle voice state changes
       if (voiceDetected && !isVoiceActive) {
@@ -186,7 +189,7 @@
       // Smart segmentation logic
       handleSmartSegmentation();
       
-    }, 50); // Higher frequency for more responsive detection
+    }, 10); // Ultra-high frequency for 10ms precision detection
   }
 
   function handleSmartSegmentation(): void {
@@ -208,12 +211,13 @@
       const silenceDuration = now - lastVoiceEndTime;
       
       if (silenceDuration >= settings.pauseThreshold) {
-        console.log(`Uploading segment after ${silenceDuration}ms of silence (${activeRecordingTime}s of active speech)`);
+        console.log(`Uploading segment after ${silenceDuration}ms of silence (${segmentRecordingTime}s segment, ${activeRecordingTime}s total)`);
         uploadCurrentSegment();
         
-        // Reset segment ready state but keep active recording time
+        // Reset segment states for next interval
         isSegmentReady = false;
-        // NOTE: activeRecordingTime should NOT be reset - it continues accumulating
+        segmentRecordingTime = 0;  // 重置分段計時，開始下一個週期
+        // NOTE: activeRecordingTime 保持累積，不重置
       }
     }
   }
@@ -382,6 +386,7 @@
       recordingTime = 0;
       activeRecordingTime = 0;
       totalRecordingTime = 0;
+      segmentRecordingTime = 0;
       isSegmentReady = false;
       lastVoiceEndTime = 0;
       wasVoiceActive = false;
@@ -394,19 +399,17 @@
         
         // Only increment active time when voice is detected
         if (isVoiceActive) {
-          activeRecordingTime++;
-          console.log(`Active time: ${activeRecordingTime}s (voice detected)`);
+          activeRecordingTime++;      // 累積顯示時間 (持續增加)
+          segmentRecordingTime++;     // 分段計算時間 (會重置)
+          console.log(`Active time: ${activeRecordingTime}s, Segment time: ${segmentRecordingTime}s (voice detected)`);
           
-          // Check if we've reached segment duration
-          if (activeRecordingTime >= settings.segmentDuration && !isSegmentReady) {
-            // Only mark as ready if we have minimum duration
-            if (activeRecordingTime >= settings.minSegmentDuration) {
-              isSegmentReady = true;
-              console.log(`Segment ready after ${activeRecordingTime}s, waiting for voice pause...`);
-            }
+          // Check if we've reached segment duration (使用分段時間)
+          if (segmentRecordingTime >= settings.segmentDuration && !isSegmentReady) {
+            isSegmentReady = true;
+            console.log(`Segment ready after ${segmentRecordingTime}s, waiting for voice pause...`);
           }
         } else {
-          console.log(`Active time: ${activeRecordingTime}s (voice paused)`);
+          console.log(`Active time: ${activeRecordingTime}s, Segment time: ${segmentRecordingTime}s (voice paused)`);
         }
         
         // Send active recording time to UI (smart timing display)
@@ -453,6 +456,7 @@
     recordingTime = 0;
     activeRecordingTime = 0;
     totalRecordingTime = 0;
+    segmentRecordingTime = 0;
     isSegmentReady = false;
     lastVoiceEndTime = 0;
     wasVoiceActive = false;
