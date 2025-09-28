@@ -6,9 +6,6 @@
   "scripts": {
     "dev": "node esbuild.config.mjs",
     "build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
-    "release": "npm run build && npm run copy-release",
-    "package": "npm run build && node scripts/package-release.js",
-    "copy-release": "node scripts/copy-release.js",
     "version": "node version-bump.mjs && git add manifest.json versions.json",
     "svelte-check": "svelte-check --tsconfig tsconfig.json"
   },

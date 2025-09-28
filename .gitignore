@@ -43,5 +43,4 @@ jspm_packages/
 .env
 
 # Release directory (for development)
-# Uncomment if you don't want to track the release folder
-# Whispering/
+dist/

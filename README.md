@@ -17,6 +17,20 @@ Advanced real-time voice transcription plugin for Obsidian using OpenAI Whisper 
 
 ## Installation
 
+### Official Installation (Recommended)
+
+1. Open Obsidian Settings
+2. Go to Community plugins
+3. Browse community plugins
+4. Search for "Smart Transcriber"
+5. Install and enable the plugin
+
+### Manual Installation
+
+1. Download the latest release from the [releases page](https://github.com/Kazzx9921/obsidian-smart-transcriber/releases)
+2. Extract to your vault's `.obsidian/plugins/smart-transcriber/` folder
+3. Enable the plugin in Obsidian settings
+
 ### Development Installation
 
 1. Clone this repository to your Obsidian plugins folder:
@@ -37,12 +51,6 @@ Advanced real-time voice transcription plugin for Obsidian using OpenAI Whisper 
    ```
 
 4. Enable the plugin in Obsidian settings
-
-### Production Installation
-
-1. Download the latest release from the releases page
-2. Extract to your vault's `.obsidian/plugins/smart-transcriber/` folder
-3. Enable the plugin in Obsidian settings
 
 ## Setup
 
@@ -137,7 +145,11 @@ smart-transcriber/
 │   └── views/               # Obsidian integration
 │       └── SidebarView.ts               # Sidebar view implementation
 ├── main.ts                  # Plugin entry point
+├── main.js                  # Compiled plugin bundle
 ├── manifest.json           # Plugin metadata
+├── versions.json           # Version compatibility
+├── LICENSE                 # MIT License
+├── README.md              # Documentation
 └── esbuild.config.mjs      # Build configuration
 ```
 
