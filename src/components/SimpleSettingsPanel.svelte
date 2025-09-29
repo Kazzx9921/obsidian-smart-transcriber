@@ -21,7 +21,7 @@
     // Save to disk
     await plugin.saveSettings();
     
-    console.log('Settings saved');
+    // Settings saved
     
     // Close panel
     onclose();

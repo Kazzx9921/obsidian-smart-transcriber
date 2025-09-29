@@ -6,7 +6,7 @@
   export let plugin: OBWhisperingPlugin;
   export let settings: VoiceTranscriberSettings;
 
-  console.log('TestComponent loaded', { plugin, settings });
+  // TestComponent loaded
 </script>
 
 <div class="test-component">
@@ -15,7 +15,7 @@
   <p>Settings loaded: {settings ? 'Yes' : 'No'}</p>
   <p>API Key configured: {settings?.openaiApiKey ? 'Yes' : 'No'}</p>
   
-  <button on:click={() => console.log('Button clicked!')}>
+  <button on:click={() => {}}>
     Test Button
   </button>
 </div>

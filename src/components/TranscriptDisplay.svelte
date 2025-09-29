@@ -35,7 +35,7 @@
   function copySegment(text: string) {
     navigator.clipboard.writeText(text).then(() => {
       // TODO: Show toast notification
-      console.log('Copied to clipboard:', text);
+      // Copied to clipboard
     });
   }
 
@@ -46,7 +46,7 @@
       .join(' ');
     
     navigator.clipboard.writeText(allText).then(() => {
-      console.log('All transcripts copied to clipboard');
+      // All transcripts copied to clipboard
     });
   }
 

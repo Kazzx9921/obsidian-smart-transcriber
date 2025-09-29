@@ -1,0 +1,29 @@
+/* Voice Transcriber Sidebar Styles */
+.voice-transcriber-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.voice-transcriber-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.voice-transcriber-error {
+    padding: 20px;
+    color: var(--text-error);
+}
+
+.voice-transcriber-error h3 {
+    margin-top: 0;
+}
+
+.voice-transcriber-error p {
+    margin: 8px 0;
+}
+
+.voice-transcriber-error strong {
+    font-weight: var(--font-weight-bold);
+}

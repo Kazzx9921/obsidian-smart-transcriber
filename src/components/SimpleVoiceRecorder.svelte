@@ -83,7 +83,7 @@
         initializationError = `Recording error: ${event}`;
       });
 
-      console.log('Recording initialized successfully');
+      // Recording initialized successfully
       return true;
     } catch (error) {
       initializationError = `Failed to initialize recording: ${(error as Error).message}`;
@@ -115,7 +115,7 @@
       voiceDetector = new VoiceActivityDetector(analyser);
       signalProcessor = new SignalProcessor(analyser.frequencyBinCount);
       
-      console.log('Smart voice detection system initialized');
+      // Smart voice detection system initialized
     } catch (error) {
       console.error('Failed to setup audio analysis:', error);
       // Continue without voice detection if setup fails
@@ -161,26 +161,18 @@
                            detectionResult.confidence > 0.3 && 
                            detectionResult.audioLevel > MIN_AUDIO_LEVEL;
       
-      // 詳細調試信息 (降低頻率以減少CPU負擔)
-      if (Math.random() < 0.1) { // 只有10%的機率輸出日誌
-        console.log(`Detection Result:`, {
-          isHumanVoice: detectionResult.isHumanVoice,
-          isComputerAudio: detectionResult.isComputerAudio,
-          confidence: (detectionResult.confidence * 100).toFixed(1) + '%',
-          audioLevel: detectionResult.audioLevel.toFixed(1),
-          audioLevelPass: detectionResult.audioLevel > MIN_AUDIO_LEVEL,
-          voiceDetected: voiceDetected,
-          currentIsVoiceActive: isVoiceActive
-        });
+      // Voice detection result processing (reduced logging frequency)
+      if (Math.random() < 0.1) { // Only 10% chance to process detailed info
+        // Detailed debugging info processed here
       }
 
       // Handle voice state changes
       if (voiceDetected && !isVoiceActive) {
         isVoiceActive = true;
-        console.log(`✅ Human voice detected (confidence: ${(detectionResult.confidence * 100).toFixed(1)}%)`);
+        // Human voice detected
       } else if (!voiceDetected && isVoiceActive) {
         isVoiceActive = false;
-        console.log(`❌ Voice stopped (confidence: ${(detectionResult.confidence * 100).toFixed(1)}%)`);
+        // Voice stopped
       }
       
       // Update audio level for display
@@ -200,7 +192,7 @@
       // Voice just stopped
       lastVoiceEndTime = now;
       wasVoiceActive = false;
-      console.log(`Voice ended, starting pause timer...`);
+      // Voice ended, starting pause timer
     } else if (isVoiceActive && !wasVoiceActive) {
       // Voice just started
       wasVoiceActive = true;
@@ -211,7 +203,7 @@
       const silenceDuration = now - lastVoiceEndTime;
       
       if (silenceDuration >= settings.pauseThreshold) {
-        console.log(`Uploading segment after ${silenceDuration}ms of silence (${segmentRecordingTime}s segment, ${activeRecordingTime}s total)`);
+        // Uploading segment after silence detected
         uploadCurrentSegment();
         
         // Reset segment states for next interval
@@ -224,7 +216,7 @@
 
   function uploadCurrentSegment(): void {
     if (mediaRecorder && mediaRecorder.state === 'recording') {
-      console.log(`Uploading segment with ${activeRecordingTime}s of active speech`);
+      // Uploading segment with active speech
       
       // Stop current recording to trigger dataavailable event
       mediaRecorder.stop();
@@ -234,7 +226,7 @@
         if (internalIsRecording && mediaRecorder) {
           recordingChunks = [];
           mediaRecorder.start();
-          console.log('Recording restarted for next segment');
+          // Recording restarted for next segment
         }
       }, 100);
     }
@@ -256,7 +248,7 @@
   }
 
   async function getAudioStream(): Promise<MediaStream> {
-    console.log('Getting microphone audio with smart voice detection');
+    // Getting microphone audio with smart voice detection
     
     // Simplified audio constraints optimized for voice detection
     const audioConstraints = {
@@ -282,12 +274,12 @@
 
     for (const type of types) {
       if (MediaRecorder.isTypeSupported(type)) {
-        console.log('Using MIME type:', type);
+        // Using MIME type
         return type;
       }
     }
     
-    console.log('Using default MIME type (browser will choose)');
+    // Using default MIME type
     return '';
   }
 
@@ -325,10 +317,7 @@
     onnewsegment(processingSegment);
     
     try {
-      console.log('Sending audio segment to Whisper API...', {
-        size: audioBlob.size,
-        type: audioBlob.type
-      });
+      // Sending audio segment to Whisper API
       
       // Send to Whisper API
       const whisperResponse = await whisperAPI!.transcribe(audioBlob, {
@@ -337,7 +326,7 @@
         response_format: 'json'
       });
       
-      console.log('Received transcription:', whisperResponse);
+      // Received transcription from API
       
       const transcribedText = whisperResponse.text.trim();
       
@@ -353,7 +342,7 @@
         // Notify parent component about completed segment
         onnewsegment(completedSegment);
       } else {
-        console.log('No speech detected in segment, skipping...');
+        // No speech detected in segment, skipping
         // Remove the processing segment since there's no content
         // We don't call onnewsegment, so the processing segment will be filtered out
       }
@@ -401,15 +390,15 @@
         if (isVoiceActive) {
           activeRecordingTime++;      // 累積顯示時間 (持續增加)
           segmentRecordingTime++;     // 分段計算時間 (會重置)
-          console.log(`Active time: ${activeRecordingTime}s, Segment time: ${segmentRecordingTime}s (voice detected)`);
+          // Active recording time updated
           
           // Check if we've reached segment duration (使用分段時間)
           if (segmentRecordingTime >= settings.segmentDuration && !isSegmentReady) {
             isSegmentReady = true;
-            console.log(`Segment ready after ${segmentRecordingTime}s, waiting for voice pause...`);
+            // Segment ready, waiting for voice pause
           }
         } else {
-          console.log(`Active time: ${activeRecordingTime}s, Segment time: ${segmentRecordingTime}s (voice paused)`);
+          // Voice paused
         }
         
         // Send active recording time to UI (smart timing display)
@@ -422,7 +411,7 @@
       // Start voice detection (includes smart segmentation)
       startVoiceDetection();
 
-      console.log('Recording started');
+      // Recording started successfully
     } catch (error) {
       initializationError = `Failed to start recording: ${(error as Error).message}`;
     }
@@ -461,7 +450,7 @@
     lastVoiceEndTime = 0;
     wasVoiceActive = false;
 
-    console.log('Recording stopped');
+    // Recording stopped
   }
 
   function formatTime(seconds: number): string {

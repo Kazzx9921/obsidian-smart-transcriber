@@ -1,4 +1,4 @@
-import { App, PluginSettingTab, Setting } from 'obsidian';
+import { App, PluginSettingTab, Setting, requestUrl } from 'obsidian';
 import type OBWhisperingPlugin from '../../main';
 import type { VoiceTranscriberSettings } from './PluginSettings';
 
@@ -54,14 +54,15 @@ export class VoiceTranscriberSettingTab extends PluginSettingTab {
 					button.setDisabled(true);
 
 					try {
-						// Simple API test - create a small test request
-						const response = await fetch('https://api.openai.com/v1/models', {
+						// Simple API test - create a small test request using requestUrl
+						const response = await requestUrl({
+							url: 'https://api.openai.com/v1/models',
 							headers: {
 								'Authorization': `Bearer ${this.plugin.settings.openaiApiKey}`,
 							}
 						});
 
-						if (response.ok) {
+						if (response.status === 200) {
 							button.setButtonText('Success');
 							setTimeout(() => {
 								button.setButtonText('Verify');

@@ -49,7 +49,7 @@
     // User is editing, don't interfere
   }
 
-  console.log('VoiceTranscriberApp loaded', { plugin: !!plugin, settings: !!settings });
+  // VoiceTranscriberApp loaded
 
   // Watch for settings changes to update button states
   $: hasApiKey = settings.openaiApiKey && settings.openaiApiKey.length > 0;
@@ -57,13 +57,13 @@
   // Recording state handlers
   function handleStartRecording() {
     isRecording = true;
-    console.log('Starting recording...');
+    // Starting recording
   }
 
   function handleStopRecording() {
     isRecording = false;
     recordingTime = 0;
-    console.log('Stopping recording...');
+    // Stopping recording
   }
 
   function handleTimeUpdate(time: number) {
@@ -93,11 +93,11 @@
       // Update existing segment
       transcriptSegments[existingIndex] = segment;
       transcriptSegments = [...transcriptSegments]; // Trigger reactivity
-      console.log('Segment updated:', segment);
+      // Segment updated
     } else {
       // Add new segment
       transcriptSegments = [...transcriptSegments, segment];
-      console.log('New segment added:', segment);
+      // New segment added
     }
     
     // Clean up old processing segments that never got completed (after 30 seconds)
@@ -117,7 +117,7 @@
     transcriptSegments = [];
     editableTranscript = '';
     lastFullTranscript = '';
-    console.log('Transcripts cleared');
+    // Transcripts cleared
   }
 
   async function handleInsertToNote() {
@@ -127,7 +127,7 @@
       const activeFile = app.workspace.getActiveFile();
       if (!activeFile) {
         // 如果沒有打開的筆記，可以顯示提示或創建新筆記
-        console.log('No active note found');
+        // No active note found
         return;
       }
 
@@ -140,7 +140,7 @@
       // 寫入文件
       await app.vault.modify(activeFile, newContent);
       
-      console.log('Transcript inserted to note:', activeFile.name);
+      // Transcript inserted to note
     } catch (error) {
       console.error('Failed to insert transcript:', error);
     }

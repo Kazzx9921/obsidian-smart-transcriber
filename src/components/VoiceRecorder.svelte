@@ -45,7 +45,7 @@
       });
 
       await segmentManager.initialize();
-      console.log('Audio recorder initialized successfully');
+      // Audio recorder initialized successfully
     } catch (error) {
       initializationError = `Failed to initialize: ${(error as Error).message}`;
       segmentManager = null;
@@ -100,7 +100,7 @@
         recordingTime++;
       }, 1000);
 
-      console.log('Recording started');
+      // Recording started
     } catch (error) {
       handleError(error as Error);
     }
@@ -122,7 +122,7 @@
     audioLevel = 0;
     recordingTime = 0;
 
-    console.log('Recording stopped');
+    // Recording stopped
   }
 
   // Update settings when they change
