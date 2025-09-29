@@ -124,7 +124,7 @@
     if (!editableTranscript.length) return;
     
     try {
-      const activeFile = app.workspace.getActiveFile();
+      const activeFile = plugin.app.workspace.getActiveFile();
       if (!activeFile) {
         // 如果沒有打開的筆記，可以顯示提示或創建新筆記
         // No active note found
@@ -132,13 +132,13 @@
       }
 
       // 獲取當前文件內容
-      const currentContent = await app.vault.read(activeFile);
+      const currentContent = await plugin.app.vault.read(activeFile);
       
       // 在文件末尾添加轉錄內容
       const newContent = currentContent + '\n\n' + editableTranscript;
       
       // 寫入文件
-      await app.vault.modify(activeFile, newContent);
+      await plugin.app.vault.modify(activeFile, newContent);
       
       // Transcript inserted to note
     } catch (error) {
