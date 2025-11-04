@@ -1,5 +1,5 @@
 import { AudioRecorder, type AudioSegment } from './AudioRecorder';
-import { WhisperAPI, type WhisperResponse, type WhisperOptions } from './WhisperAPI';
+import { WhisperAPI, type WhisperOptions } from './WhisperAPI';
 
 export interface TranscriptSegment {
   id: string;

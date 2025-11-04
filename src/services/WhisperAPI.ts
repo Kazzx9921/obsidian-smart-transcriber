@@ -1,3 +1,5 @@
+import { requestUrl } from 'obsidian';
+
 export interface WhisperResponse {
   text: string;
   language?: string;
@@ -111,20 +113,20 @@ export class WhisperAPI {
         formData.append('prompt', options.prompt);
       }
 
-      const response = await fetch(`${this.baseURL}/audio/transcriptions`, {
+      const response = await requestUrl({
+        url: `${this.baseURL}/audio/transcriptions`,
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${this.apiKey}`,
         },
-        body: formData
+        body: formData as any
       });
 
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`OpenAI API error: ${response.status} - ${errorText}`);
+      if (response.status !== 200) {
+        throw new Error(`OpenAI API error: ${response.status} - ${response.text}`);
       }
 
-      const result = await response.json();
+      const result = response.json;
       
       // Handle different response formats
       if (typeof result === 'string') {

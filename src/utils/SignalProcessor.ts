@@ -230,7 +230,8 @@ export class SignalProcessor {
     
     // 4. 小波消噪 (應用於時域信號的頻域表示)
     if (timeSignal.length > 0) {
-      const denoisedTimeSignal = this.waveletDenoising.denoise(timeSignal);
+      // Apply wavelet denoising to time signal
+      this.waveletDenoising.denoise(timeSignal);
       // 這裡可以進一步結合時域處理結果，暫時保持頻域處理
     }
     

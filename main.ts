@@ -19,16 +19,16 @@ export default class OBWhisperingPlugin extends Plugin {
 			);
 
 		// Add ribbon icon to activate view
-		this.addRibbonIcon('captions', 'Open Smart Transcriber', () => {
-				this.activateView();
+		this.addRibbonIcon('captions', 'Open voice transcriber', () => {
+				void this.activateView();
 			});
 
 		// Add command to open view
 		this.addCommand({
-			id: 'open-smart-transcriber',
-			name: 'Open Voice Transcriber',
+			id: 'open-transcriber',
+			name: 'Open voice transcriber',
 				callback: () => {
-					this.activateView();
+					void this.activateView();
 				}
 			});
 
@@ -68,7 +68,7 @@ export default class OBWhisperingPlugin extends Plugin {
 			}
 
 			// Reveal and focus the leaf
-			workspace.revealLeaf(leaf);
+			void workspace.revealLeaf(leaf);
 		} catch (error) {
 			console.error('Error activating view:', error);
 		}

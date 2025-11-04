@@ -1,6 +1,5 @@
 import { App, PluginSettingTab, Setting, requestUrl } from 'obsidian';
 import type OBWhisperingPlugin from '../../main';
-import type { VoiceTranscriberSettings } from './PluginSettings';
 
 export class VoiceTranscriberSettingTab extends PluginSettingTab {
 	plugin: OBWhisperingPlugin;
@@ -17,21 +16,23 @@ export class VoiceTranscriberSettingTab extends PluginSettingTab {
 
 		// Support section
 		new Setting(containerEl)
-			.setName('Support Smart Transcriber')
-			.setDesc('Grateful for Smart Transcriber? Your support helps us continue building and improving it!')
+			.setName('Support smart transcriber')
+			.setDesc('Grateful for smart transcriber? Your support helps us continue building and improving it!')
 			.addButton(button => button
-				.setButtonText('Buy Me a Coffee')
+				.setButtonText('Buy me a coffee')
 				.setCta()
 				.onClick(() => {
 					window.open('https://buymeacoffee.com/kazen', '_blank');
 				}));
 
 		// API 設定區塊
-		containerEl.createEl('h3', { text: 'API Configuration' });
+		new Setting(containerEl)
+			.setName('API configuration')
+			.setHeading();
 
 		// OpenAI API Key
 		new Setting(containerEl)
-			.setName('OpenAI API Key')
+			.setName('OpenAI API key')
 			.setDesc('Your OpenAI API key for Whisper transcription. Get one from https://platform.openai.com/api-keys')
 			.addText(text => text
 				.setPlaceholder('sk-...')
@@ -75,7 +76,7 @@ export class VoiceTranscriberSettingTab extends PluginSettingTab {
 								button.setDisabled(false);
 							}, 2000);
 						}
-					} catch (error) {
+					} catch {
 						button.setButtonText('Error');
 						setTimeout(() => {
 							button.setButtonText('Verify');
@@ -97,11 +98,13 @@ export class VoiceTranscriberSettingTab extends PluginSettingTab {
 				}));
 
 		// 錄音設定區塊
-		containerEl.createEl('h3', { text: 'Recording Settings' });
+		new Setting(containerEl)
+			.setName('Recording settings')
+			.setHeading();
 
 		// 分段時間
 		new Setting(containerEl)
-			.setName('Segment Duration')
+			.setName('Segment duration')
 			.setDesc('How often to send audio segments for transcription (3-30 seconds)')
 			.addSlider(slider => slider
 				.setLimits(3, 30, 1)
@@ -124,7 +127,7 @@ export class VoiceTranscriberSettingTab extends PluginSettingTab {
 
 		// 停頓檢測閾值
 		new Setting(containerEl)
-			.setName('Pause Detection Threshold')
+			.setName('Pause detection threshold')
 			.setDesc('How long to wait for voice pause before uploading segment (10ms - 2000ms)')
 			.addSlider(slider => slider
 				.setLimits(10, 2000, 10)
@@ -150,7 +153,9 @@ export class VoiceTranscriberSettingTab extends PluginSettingTab {
 
 
 		// 語言設定區塊
-		containerEl.createEl('h3', { text: 'Language Settings' });
+		new Setting(containerEl)
+			.setName('Language settings')
+			.setHeading();
 
 		// 語言選擇
 		new Setting(containerEl)
@@ -179,7 +184,7 @@ export class VoiceTranscriberSettingTab extends PluginSettingTab {
 
 		// 翻譯開關
 		new Setting(containerEl)
-			.setName('Enable Translation')
+			.setName('Enable translation')
 			.setDesc('Translate non-English audio to English')
 			.addToggle(toggle => toggle
 				.setValue(this.plugin.settings.enableTranslation)
@@ -189,7 +194,9 @@ export class VoiceTranscriberSettingTab extends PluginSettingTab {
 				}));
 
 		// 顯示設定區塊
-		containerEl.createEl('h3', { text: 'Display Settings' });
+		new Setting(containerEl)
+			.setName('Display settings')
+			.setHeading();
 
 		// 自動滾動
 		new Setting(containerEl)

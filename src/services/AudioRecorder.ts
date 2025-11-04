@@ -70,7 +70,7 @@ export class AudioRecorder {
 
       this.mediaRecorder.addEventListener('dataavailable', this.handleDataAvailable.bind(this));
       this.mediaRecorder.addEventListener('error', (event) => {
-        this.onError?.(new Error(`MediaRecorder error: ${event}`));
+        this.onError?.(new Error(`MediaRecorder error: ${event.type}`));
       });
 
     } catch (error) {
@@ -97,7 +97,7 @@ export class AudioRecorder {
     return ''; // Let browser choose
   }
 
-  async startRecording(): Promise<void> {
+  startRecording(): void {
     if (!this.mediaRecorder || this.isRecording) {
       throw new Error('Recorder not initialized or already recording');
     }
@@ -201,7 +201,7 @@ export class AudioRecorder {
   }
 
   private generateSegmentId(): string {
-    return `segment_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    return `segment_${Date.now()}_${Math.random().toString(36).substring(2, 11)}`;
   }
 
   getCurrentAudioLevel(): number {

@@ -5,7 +5,7 @@ import type OBWhisperingPlugin from '../../main';
 export const VIEW_TYPE_VOICE_TRANSCRIBER = 'voice-transcriber-view';
 
 export class SidebarView extends ItemView {
-	private component: any;
+	private component: VoiceTranscriberApp | null = null;
 	private plugin: OBWhisperingPlugin;
 
 	constructor(leaf: WorkspaceLeaf, plugin: OBWhisperingPlugin) {
@@ -18,7 +18,7 @@ export class SidebarView extends ItemView {
 	}
 
 	getDisplayText() {
-		return 'Smart Transcriber';
+		return 'Smart transcriber';
 	}
 
 	getIcon() {
@@ -52,7 +52,7 @@ export class SidebarView extends ItemView {
 			const errorDiv = this.contentEl.createDiv('voice-transcriber-error');
 			
 			// Create error elements using safe DOM API
-			errorDiv.createEl('h3', { text: 'Voice Transcriber Error' });
+			errorDiv.createEl('h3', { text: 'Voice transcriber error' });
 			errorDiv.createEl('p', { text: 'Failed to load the voice transcriber interface.' });
 			
 			const errorDetailP = errorDiv.createEl('p');
