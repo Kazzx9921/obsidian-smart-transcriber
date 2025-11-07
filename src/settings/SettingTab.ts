@@ -16,8 +16,8 @@ export class VoiceTranscriberSettingTab extends PluginSettingTab {
 
 		// Support section
 		new Setting(containerEl)
-			.setName('Support smart transcriber')
-			.setDesc('Grateful for smart transcriber? Your support helps us continue building and improving it!')
+			.setName('Support Smart Transcriber')
+			.setDesc('Grateful for Smart Transcriber? Your support helps us continue building and improving it!')
 			.addButton(button => button
 				.setButtonText('Buy me a coffee')
 				.setCta()
@@ -65,20 +65,20 @@ export class VoiceTranscriberSettingTab extends PluginSettingTab {
 
 						if (response.status === 200) {
 							button.setButtonText('Success');
-							setTimeout(() => {
+							void setTimeout(() => {
 								button.setButtonText('Verify');
 								button.setDisabled(false);
 							}, 2000);
 						} else {
 							button.setButtonText('Failed');
-							setTimeout(() => {
+							void setTimeout(() => {
 								button.setButtonText('Verify');
 								button.setDisabled(false);
 							}, 2000);
 						}
 					} catch {
 						button.setButtonText('Error');
-						setTimeout(() => {
+						void setTimeout(() => {
 							button.setButtonText('Verify');
 							button.setDisabled(false);
 						}, 2000);
