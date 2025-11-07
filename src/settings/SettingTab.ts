@@ -32,7 +32,7 @@ export class VoiceTranscriberSettingTab extends PluginSettingTab {
 
 		// OpenAI API Key
 		new Setting(containerEl)
-			.setName('OpenAI API Key')
+			.setName('OpenAI API key')
 			.setDesc('Your OpenAI API key for Whisper transcription. Get one from https://platform.openai.com/api-keys')
 			.addText(text => text
 				.setPlaceholder('sk-...')
@@ -142,8 +142,8 @@ export class VoiceTranscriberSettingTab extends PluginSettingTab {
 				.setDisabled(true)
 				.then(textComponent => {
 					// Update the text display when slider changes
-					const slider = containerEl.querySelector('.setting-item:last-child input[type="range"]') as HTMLInputElement;
-					if (slider) {
+					const slider = containerEl.querySelector('.setting-item:last-child input[type="range"]');
+					if (slider instanceof HTMLInputElement) {
 						slider.addEventListener('input', () => {
 							textComponent.setValue(`${slider.value}ms`);
 						});

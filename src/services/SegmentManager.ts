@@ -50,7 +50,7 @@ export class SegmentManager {
     }
   }
 
-  async startRecording(): Promise<void> {
+  startRecording(): void {
     if (!this.isInitialized) {
       throw new Error('SegmentManager not initialized. Call initialize() first.');
     }

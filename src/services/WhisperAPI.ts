@@ -119,7 +119,7 @@ export class WhisperAPI {
         headers: {
           'Authorization': `Bearer ${this.apiKey}`,
         },
-        body: formData as any
+        body: formData as unknown as string
       });
 
       if (response.status !== 200) {
