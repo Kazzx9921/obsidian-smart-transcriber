@@ -61,6 +61,9 @@ export class SidebarView extends ItemView {
 			
 			errorDiv.createEl('p', { text: 'Please check the developer console for more details.' });
 		}
+		
+		// Ensure this method returns a Promise as required by the base class
+		return Promise.resolve();
 	}
 
 	async onClose() {
@@ -68,5 +71,8 @@ export class SidebarView extends ItemView {
 		if (this.component) {
 			this.component.$destroy();
 		}
+		
+		// Ensure this method returns a Promise as required by the base class
+		return Promise.resolve();
 	}
 }

@@ -56,7 +56,7 @@ export class SegmentManager {
     }
 
     try {
-      await this.audioRecorder.startRecording();
+      this.audioRecorder.startRecording();
     } catch (error) {
       this.options.onError?.(error as Error);
       throw error;

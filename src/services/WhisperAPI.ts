@@ -49,7 +49,7 @@ export class WhisperAPI {
         reject
       });
 
-      this.processQueue();
+      void this.processQueue();
     });
   }
 

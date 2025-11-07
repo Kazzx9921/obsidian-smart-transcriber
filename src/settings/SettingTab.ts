@@ -32,7 +32,7 @@ export class VoiceTranscriberSettingTab extends PluginSettingTab {
 
 		// OpenAI API Key
 		new Setting(containerEl)
-			.setName('OpenAI API key')
+			.setName('OpenAI API Key')
 			.setDesc('Your OpenAI API key for Whisper transcription. Get one from https://platform.openai.com/api-keys')
 			.addText(text => text
 				.setPlaceholder('sk-...')
@@ -46,8 +46,8 @@ export class VoiceTranscriberSettingTab extends PluginSettingTab {
 				.setTooltip('Test your OpenAI API key')
 				.onClick(async () => {
 					if (!this.plugin.settings.openaiApiKey) {
-						button.setButtonText('No API Key');
-						setTimeout(() => button.setButtonText('Verify'), 2000);
+						button.setButtonText('No API key');
+						void setTimeout(() => button.setButtonText('Verify'), 2000);
 						return;
 					}
 
@@ -99,7 +99,7 @@ export class VoiceTranscriberSettingTab extends PluginSettingTab {
 
 		// 錄音設定區塊
 		new Setting(containerEl)
-			.setName('Recording settings')
+			.setName('Recording')
 			.setHeading();
 
 		// 分段時間
@@ -154,7 +154,7 @@ export class VoiceTranscriberSettingTab extends PluginSettingTab {
 
 		// 語言設定區塊
 		new Setting(containerEl)
-			.setName('Language settings')
+			.setName('Language')
 			.setHeading();
 
 		// 語言選擇
@@ -195,7 +195,7 @@ export class VoiceTranscriberSettingTab extends PluginSettingTab {
 
 		// 顯示設定區塊
 		new Setting(containerEl)
-			.setName('Display settings')
+			.setName('Display')
 			.setHeading();
 
 		// 自動滾動
