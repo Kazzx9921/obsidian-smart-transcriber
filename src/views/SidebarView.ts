@@ -18,7 +18,7 @@ export class SidebarView extends ItemView {
 	}
 
 	getDisplayText() {
-		return 'Smart transcriber';
+		return 'Smart Transcriber';
 	}
 
 	getIcon() {
