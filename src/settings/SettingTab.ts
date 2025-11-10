@@ -16,8 +16,8 @@ export class VoiceTranscriberSettingTab extends PluginSettingTab {
 
 		// Support section
 		new Setting(containerEl)
-			.setName('Support Smart Transcriber')
-			.setDesc('Grateful for Smart Transcriber? Your support helps us continue building and improving it!')
+			.setName('Support smart transcriber')
+			.setDesc('Grateful for smart transcriber? Your support helps us continue building and improving it!')
 			.addButton(button => button
 				.setButtonText('Buy me a coffee')
 				.setCta()
@@ -32,20 +32,18 @@ export class VoiceTranscriberSettingTab extends PluginSettingTab {
 
 		// OpenAI API Key
 		new Setting(containerEl)
-			.setName('OpenAI API key')
-			.setDesc('Your OpenAI API key for Whisper transcription. Get one from https://platform.openai.com/api-keys')
+			.setName('Openai api key')
+			.setDesc('Your openai api key for whisper transcription. Get one from https://platform.openai.com/api-keys')
 			.addText(text => text
 				.setPlaceholder('sk-...')
 				.setValue(this.plugin.settings.openaiApiKey)
-				.onChange((value) => {
-					void (async () => {
-						this.plugin.settings.openaiApiKey = value.trim();
-						await this.plugin.saveSettings();
-					})();
+				.onChange(async (value) => {
+					this.plugin.settings.openaiApiKey = value.trim();
+					await this.plugin.saveSettings();
 				}))
 			.addButton(button => button
 				.setButtonText('Verify')
-				.setTooltip('Test your OpenAI API key')
+				.setTooltip('Test your openai api key')
 				.onClick(async () => {
 					if (!this.plugin.settings.openaiApiKey) {
 						button.setButtonText('No API key');
@@ -94,11 +92,9 @@ export class VoiceTranscriberSettingTab extends PluginSettingTab {
 			.addDropdown(dropdown => dropdown
 				.addOption('whisper-1', 'Whisper v1')
 				.setValue(this.plugin.settings.whisperModel)
-				.onChange((value) => {
-					void (async () => {
-						this.plugin.settings.whisperModel = value;
-						await this.plugin.saveSettings();
-					})();
+				.onChange(async (value) => {
+					this.plugin.settings.whisperModel = value;
+					await this.plugin.saveSettings();
 				}));
 
 		// 錄音設定區塊
@@ -114,22 +110,18 @@ export class VoiceTranscriberSettingTab extends PluginSettingTab {
 				.setLimits(3, 30, 1)
 				.setValue(this.plugin.settings.segmentDuration)
 				.setDynamicTooltip()
-				.onChange((value) => {
-					void (async () => {
-						this.plugin.settings.segmentDuration = value;
-						await this.plugin.saveSettings();
-					})();
+				.onChange(async (value) => {
+					this.plugin.settings.segmentDuration = value;
+					await this.plugin.saveSettings();
 				}))
 			.addText(text => text
 				.setValue(String(this.plugin.settings.segmentDuration))
-				.onChange((value) => {
-					void (async () => {
-						const numValue = parseInt(value);
-						if (!isNaN(numValue) && numValue >= 3 && numValue <= 30) {
-							this.plugin.settings.segmentDuration = numValue;
-							await this.plugin.saveSettings();
-						}
-					})();
+				.onChange(async (value) => {
+					const numValue = parseInt(value);
+					if (!isNaN(numValue) && numValue >= 3 && numValue <= 30) {
+						this.plugin.settings.segmentDuration = numValue;
+						await this.plugin.saveSettings();
+					}
 				}));
 
 
@@ -141,11 +133,9 @@ export class VoiceTranscriberSettingTab extends PluginSettingTab {
 				.setLimits(10, 2000, 10)
 				.setValue(this.plugin.settings.pauseThreshold)
 				.setDynamicTooltip()
-				.onChange((value) => {
-					void (async () => {
-						this.plugin.settings.pauseThreshold = value;
-						await this.plugin.saveSettings();
-					})();
+				.onChange(async (value) => {
+					this.plugin.settings.pauseThreshold = value;
+					await this.plugin.saveSettings();
 				}))
 			.addText(text => text
 				.setValue(`${this.plugin.settings.pauseThreshold}ms`)
@@ -186,25 +176,21 @@ export class VoiceTranscriberSettingTab extends PluginSettingTab {
 					.addOption('ru', 'Русский')
 					.addOption('ar', 'العربية')
 					.setValue(this.plugin.settings.language)
-					.onChange((value) => {
-						void (async () => {
-							this.plugin.settings.language = value;
-							await this.plugin.saveSettings();
-						})();
+					.onChange(async (value) => {
+						this.plugin.settings.language = value;
+						await this.plugin.saveSettings();
 					});
 			});
 
 		// 翻譯開關
 		new Setting(containerEl)
 			.setName('Enable translation')
-			.setDesc('Translate non-English audio to English')
+			.setDesc('Translate non-english audio to english')
 			.addToggle(toggle => toggle
 				.setValue(this.plugin.settings.enableTranslation)
-				.onChange((value) => {
-					void (async () => {
-						this.plugin.settings.enableTranslation = value;
-						await this.plugin.saveSettings();
-					})();
+				.onChange(async (value) => {
+					this.plugin.settings.enableTranslation = value;
+					await this.plugin.saveSettings();
 				}));
 
 		// 顯示設定區塊
@@ -218,11 +204,9 @@ export class VoiceTranscriberSettingTab extends PluginSettingTab {
 			.setDesc('Automatically scroll to the latest transcript')
 			.addToggle(toggle => toggle
 				.setValue(this.plugin.settings.autoScroll)
-				.onChange((value) => {
-					void (async () => {
-						this.plugin.settings.autoScroll = value;
-						await this.plugin.saveSettings();
-					})();
+				.onChange(async (value) => {
+					this.plugin.settings.autoScroll = value;
+					await this.plugin.saveSettings();
 				}));
 
 
